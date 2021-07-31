@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	<display-name>funweb-model2</display-name>
+	<welcome-file-list>
+		<!-- 톰캣쪽 자료 -->
+		<!-- 항상 공개폴더여야해서 웹앱하위에 있어야함 -->
+		<!-- 이 설정에의해서 도메인주소로 접근시 바로 요페이지가 나옴!!! -->
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="funweb-model2:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>funweb-model2</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="funweb-model2.war">
+      <element id="artifact" artifact-name="funweb-model2:war exploded" />
+    </root>
+  </artifact>
+</component>

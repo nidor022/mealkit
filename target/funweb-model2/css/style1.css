@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.jaryo{
+	width: 1000px;
+}
+
+.jaryo1{
+	background-color:red;
+	height: 200px;
+	width: 200px;
+}
+
+.jaryo2 {
+	display : flex;
+	justify-content:space-between;
+}
