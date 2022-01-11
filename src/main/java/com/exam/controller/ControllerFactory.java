@@ -19,22 +19,20 @@ import com.exam.controller.service.ServiceWriteFormController;
 import com.exam.controller.service.ServiceWriteProController;
 import com.exam.controller.user.*;
 
-//ÄÁÆ®·Ñ·¯¸¶´Ù »ý¼ºÀÚ¸¦ ÇÁ¶óÀÌºøÀ¸·Î °¨Ãß°í ¼¼ÅÍ°ÔÅÍÇÏ±â Á» ¿¡¹Ù´Ï±î ½Ì±ÛÅæÀ¸·Î °ü¸®ÇÔ
+// ì‹±ê¸€í†¤
 public class ControllerFactory {
-	/* ½Ì±ÛÅæ, ½ºÇÁ¸µ°¡¸é ¾Ö³ëÅ×ÀÌ¼Ç ÇÑ°³·Î ÇØ°á°¡´É */
 	private static ControllerFactory instance = new ControllerFactory();
 
 	public static ControllerFactory getInstance() {
 		return instance;
 	}
 	////////////////////////////////////////////////////////////
+
 	private Map<String, Controller> map = new HashMap<>();
 
 	private ControllerFactory() {
-		// Å°°ªÀº .do·Î ³¡³ª´Â ¿äÃ» URLÁÖ¼ÒÀÇ ÀÏºÎ - ¸í·É¾î
 
-		// ¸í·É¾î¿Í ¸í·É¾î¸¦ Ã³¸®ÇÏ´Â ÄÁÆ®·Ñ·¯ °´Ã¼¸¦ ½ÖÀ¸·Î µî·Ï
-		// »ç¿ëÀÚ·ÎºÎÅÍ "" ÀÌ·¯ÇÑ ¿äÃ»ÀÌ¿À¸é new ~ °¡ ½ÇÇàµÈ´Ù!
+		// index
 		map.put("/index", new IndexController());
 
 		// user
@@ -49,13 +47,13 @@ public class ControllerFactory {
 		map.put("/UserUpdatePro", new UserUpdateProController());
 		map.put("/UserDelete", new UserDeleteController());
 
-		// notice ÅØ½ºÆ® °Ô½ÃÆÇ
+		// notice 
 		map.put("/notice", new NoticeController());
 		map.put("/writeForm", new WriteFormController());
 		//map.put("/writePro", new WriteProController());
 		map.put("/content", new ContentController());
 
-		// fileNotice ÀÚ·á½Ç °Ô½ÃÆÇ
+		// fileNotice 
 		map.put("/fileNotice", new FileNoticeController());
 		map.put("/fileWriteForm", new FileWriteFormController());
 		map.put("/fileWritePro", new FileWriteProController());
@@ -64,13 +62,13 @@ public class ControllerFactory {
 		map.put("/fileDelete", new FileDeleteController());
 		map.put("/fileModifyForm", new FileModifyFormController());
 		map.put("/fileModifyPro", new FileModifyProController());
-		// fileNotice ÀÚ·á½Ç °Ô½ÃÆÇÀÇ ´ñ±Û³ðµé
+		// fileNotice
 		map.put("/jsonCommentInsert", new CommentInsertController());
 		map.put("/jsonCommentGet", new CommentGetController());
 //		map.put("/jsonCommentNum", new CommentsNumController());
 
 
-		// serviceNotice ÀÚ·á½Ç °Ô½ÃÆÇ
+		// serviceNotice
 		map.put("/serviceBoard", new ServiceBoardController());
 		map.put("/serviceWriteForm", new ServiceWriteFormController());
 		map.put("/serviceWritePro", new ServiceWriteProController());
@@ -110,10 +108,10 @@ public class ControllerFactory {
 		map.put("/orderPage", new OrderpageController());
 		map.put("/nonUserOrderPage", new NonUserOrderPageController());
 
-	} // »ý¼ºÀÚ
+	} 
 
 	public Controller getController(String command) {
-		// Map ÄÃ·º¼Ç: Å°°ª¾ø´Â, Á¸ÀçÇÏÁö¾Ê´Â °ªÀ» ²¨³»¸é nullÀ» ¸®ÅÏÇÔ
+
 		Controller controller = map.get(command);
 		return controller;
 	}

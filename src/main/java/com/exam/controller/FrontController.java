@@ -9,97 +9,83 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-		  // ÀÌ·±·ùÀÇ url»çÀÌÆ® Ã³¸®, ½ÃÀÛÇÏ±âÀü¿¡ ¹Ì¸® ÁØºñ 1¼øÀ§·Î
+		  // í†°ìº£ì„œë²„ì˜ ì»¨í…Œì´ë„ˆê°€ ë§¤í•‘ëœ urlì„ ì°¾ì•„ ì‹¤í–‰
 @WebServlet(urlPatterns = "*.do", loadOnStartup = 1)
 public class FrontController extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
-		System.out.println("init() È£ÃâµÊ");
+		System.out.println("init() í˜¸ì¶œ");
 		
-		// application °´Ã¼ °¡Á®¿Í¼­ ÇÊ¿äÇÑ µ¥ÀÌÅÍ ÀúÀå
+		// Serveletê³¼ containerê°„ì˜ ì—°ë™
+		// Serveletì˜ ì •ë³´ ì¶”ì¶œì„ ìœ„í•´ SeveletContainerì— ì ‘ê·¼
 		ServletContext application = config.getServletContext();
-		application.setAttribute("aa", "¾È³ç");
+		application.setAttribute("aa", "hi");
 		String hello = (String) application.getAttribute("aa");
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doGet() È£ÃâµÊ");
+		System.out.println("doGet() í˜¸ì¶œ");
 		
-		// ¿äÃ» ÁÖ¼Ò
-		// http://localhost:80/funweb-model2/index.do
-		//					  > ÀÌ ÀÌÈÄ ºÎºĞÀÌ URI, ½ÇÁ¦À¥¼­ºñ½º¸¦ÇÏ¸é À¯ÀÏÇÑ ÁÖ¼Ò¿©¾ßÇÔ
-		//						À§Ä¡¸¦ ³ªÅ¸³»´Â °ÍÀÌ ¾Æ´Ï¶ó ½Äº°ÇÏ´Â ºÎºĞ, Åë»óÀûÀ¸·Î URLÀÌ¶ó°í ¾ê±â¸¦ ÇÏÁö¸¸ Á¤È®ÇÏ°Ô´Â URI		
-		// http://localhost:80/index.do
-					  
-		/* 1´Ü°è) ¸í·É¾î command ±¸ÇÏ±â */
-		// URI ÁÖ¼Ò °¡Á®¿À±â
-		String requestURI = request.getRequestURI();
-		System.out.println("URI ÁÖ¼Ò: " + requestURI);
-			// URI ÁÖ¼Ò: /funweb-model2/index.do
+		String requestURI = request.getRequestURI(); // í”„ë¡œì íŠ¸ì™€ íŒŒì¼ ê²½ë¡œê¹Œì§€
+		System.out.println("URI " + requestURI);
+			// URI : /funweb-model2/index.do
 		
-		// ÇÁ·ÎÁ§Æ® ÀÌ¸§ °æ·Î °¡Á®¿À±â
-		String contextPath = request.getContextPath(); // ¾øÀ¸¸é ºó¹®ÀÚ¿­ "" µé¾î¿È
+		String contextPath = request.getContextPath();  
 		System.out.println("contextPath: " + contextPath);
 			// contextPath: /funweb-model2
 		
-		// ¿äÃ» ¸í·É¾î ±¸ÇÏ±â
 		String command = requestURI.substring(contextPath.length());
 			// command: /index.do
 		command = command.substring(0, command.indexOf(".do"));
 		System.out.println("command: " + command);
 			// command: /index
 		
-		
-		/* 2´Ü°è) ¸í·É¾î ½ÇÇàÇÏ±â */ // << ¿ä´®À» ¿ì¸®°¡ ÄÚµù(Å°¸Ê)
-		// ÀÌ·±½Ä(if else)·ÎÇÏ¸é ÇÊ¿ä¾ø´ÂÄÚµåµµ ´Ù ³ëÃâµÇ¾î¼­ ÁÁÀº°Ô ¾Æ´Ô
 		Controller controller = null;
-		ControllerFactory factory = ControllerFactory.getInstance(); // new! °´Ã¼»ı¼ºÀº µ¿½ÃÁ¢¼ÓÀÚ¸¦ °í·ÁÇØ¾ßÇÔ -> Áß¿äÇÑ ½Ì±ÛÅæ 
-		String strView = null;								 // ÇÑ¹ø ´º·Îµî·ÏÇÑ ÄÁÆ®·Ñ·¯°´Ã¼´Â ÀÚÃ¼°¡ ½Ì±ÛÅæÀÌ¶ó °Á ²¨³»¾²¸éµÊ 
-															 // ±×Ä¡¸¸ ÄÁÆ®·Ñ·¯ÆÑÅä¸®´Â ¾Æ´Ï´Ï°¡ ½Ì±ÛÅæ ÇØÁà¾ß°ÚÁö
-		// ¸í·É¾î¿¡ ÇØ´çÇÏ´Â ÄÁÆ®·Ñ·¯ °´Ã¼ ±¸ÇÏ±â						
+		ControllerFactory factory = ControllerFactory.getInstance();  
+		String strView = null;								  
+															 
 		controller = factory.getController(command);
 		if (controller  == null) {
-			System.out.println(command + "¸¦ Ã³¸®ÇÏ´Â ÄÁÆ®·Ñ·¯°¡ ¾ø½À´Ï´Ù.");
-			return; // returnÀÌ´Ï±î ¿©±îÁöÇÏ±¸ ¼­¹ö³¡³²
+			System.out.println(command + "controller í˜¸ì¶œ");
+			return; 
 		}
 		
 		try {
-			// Å°¸Ê¿¡¼­ÀÇ new ¾îÂ¼±¸Controller¿¡ ÇØ´çÇÏ´Â ÄÁÆ®·Ñ·¯ °´Ã¼ ½ÇÇàÇÏ±â
+			
 			strView = controller.execute(request, response); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		
-		/* 3´Ü°è) È­¸éÀÀ´ä(jsp½ÇÇà) ¶Ç´Â ¸®´ÙÀÌ·ºÆ®(.do) ÀÌµ¿ */
+		
 		if (strView == null) {
-			System.out.println("ÀÌµ¿ÇÒ È­¸éÁ¤º¸(View)°¡ ¾ø½À´Ï´Ù.");
+			System.out.println("ì˜¤ë¥˜");
 			return;
 		}
 		
-		if (strView.startsWith("redirect:")) { // .do·Î ³¡³ª´Â °æ·Î
+		if (strView.startsWith("redirect:")) { 
 			String redirectPath = strView.substring("redirect:".length());
 			response.sendRedirect(redirectPath);
 								// index.do?
 		} else {										// index.jsp?
 			String jspPath = "/WEB-INF/views/" + strView + ".jsp";
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jspPath);
-			dispatcher.forward(request, response); // ÇØ´ç jsp ¹Ù·Î ½ÇÇàÇÏ±â ( °¬´Ù¿À´Â ¸®´ÙÀÌ·ºÆ®¶ûÀº ´Ù¸§ )
+			dispatcher.forward(request, response); // ëŒ€ìƒ ìì›ìœ¼ë¡œ ì œì–´ë¥¼ ë„˜ê¸´ë‹¤
 		}
-		
 		
 	} // doGet
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost() È£ÃâµÊ");
+		System.out.println("doPost() È£ï¿½ï¿½ï¿½");
 		
-		request.setCharacterEncoding("utf-8"); // post¿äÃ» ÆÄ¶ó¹ÌÅÍ°ª ÇÑ±ÛÃ³¸®
+		request.setCharacterEncoding("utf-8"); 
 		doGet(request, response);
 	} // doPost
 	
 	public void destroy() {
-		System.out.println("destroy() È£ÃâµÊ");
+		System.out.println("destroy() È£ï¿½ï¿½ï¿½");
 	}
 
 }
